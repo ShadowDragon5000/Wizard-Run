@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private float horizontalInput;
+    private float speed = 10.0f;
+
+    //private float depthInput;
+    //private float depthSpeed = 50.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +19,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        horizontalInput = Input.GetAxis("Horizontal");
+        transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
+
+        //depthInput = Input.GetAxis("Depth");
+        //if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            //transform.Translate(Vector3.forward * Time.deltaTime * depthSpeed);
+        }
+
     }
 }
