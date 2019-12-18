@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     private float nextFire = 0.0f;
 
 
+    private float verticalInput;
+    private float speed = 10.0f;
+    public Rigidbody playerRb;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,4 +33,13 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
 
     }
+    // {
+    //     horizontalInput = Input.GetAxis("Horizontal");
+    //     verticalInput = Input.GetAxis("Vertical");
+    //     transform.Translate(Vector3.right * speed * Time.deltaTime * horizontalInput);
+    //     transform.Translate(Vector3.forward * speed * Time.deltaTime * verticalInput);
+    //    }
+
+        
+    
 }
