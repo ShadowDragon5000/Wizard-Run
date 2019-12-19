@@ -9,11 +9,11 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public float fireDelta = 1.0f;
     private float nextFire = 0.0f;
-
-
     private float verticalInput;
-    private float speed = 10.0f;
     public Rigidbody playerRb;
+    private float posBound = 24.0f;
+    private float negBound = -24.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,17 +29,52 @@ public class PlayerController : MonoBehaviour
             nextFire = Time.time + fireDelta;
             Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
         }
-        horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
+        var player = GameObject.Find("Player");
+        if (transform.position.x > posBound)
+        {
+            //transform.position.x = posBound;
+            //transform.Translate(posBound, transform.position.y, transform.position.z);
+            Destroy(gameObject);
+            Debug.Log("Game Over");
+        }
+        else if (transform.position.x < negBound)
+        {
+            //transform.position.x = negBound;
+            //transform.Translate(negBound, transform.position.y, transform.position.z);
+            Destroy(gameObject);
+            Debug.Log("Game Over");
+        }
+        else
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
+        }
+        if (player.transform.position.z > posBound)
+        {
+            Destroy(gameObject);
+            Debug.Log("Game Over");
+        }
+        else if (player.transform.position.z < negBound)
+        {
+            Destroy(gameObject);
+            Debug.Log("Game Over");
+        }
+        else
+        {
+            verticalInput = Input.GetAxis("Vertical");
+            transform.Translate(Vector3.forward * speed * Time.deltaTime * verticalInput);
+        }
 
     }
-    // {
-    //     horizontalInput = Input.GetAxis("Horizontal");
-    //     verticalInput = Input.GetAxis("Vertical");
-    //     transform.Translate(Vector3.right * speed * Time.deltaTime * horizontalInput);
-    //     transform.Translate(Vector3.forward * speed * Time.deltaTime * verticalInput);
-    //    }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+            Debug.Log("Game Over");
+        }        
+    } 
         
     
 }
